@@ -1,0 +1,67 @@
+{
+  "name": "Topic Marketing Blog",
+  "short_name": "Topic Blog",
+  "description": "A marketing blog sharing smart strategies in SEO, affiliate marketing, and digital growth to boost your online success.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "lang": "en-US",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/images/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "any",
+      "label": "Homepage on Mobile"
+    },
+    {
+      "src": "/images/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "any",
+      "label": "Featured Post"
+    }
+  ],
+  "categories": ["news", "education", "business"],
+  "shortcuts": [
+    {
+      "name": "New SEO Strategies",
+      "short_name": "SEO Tips",
+      "description": "Latest articles on SEO optimization.",
+      "url": "/search/label/SEO",
+      "icons": [{ "src": "/images/seo-icon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Affiliate Guides",
+      "short_name": "Affiliate",
+      "description": "Guides and tutorials for affiliate marketing.",
+      "url": "/search/label/Affiliate",
+      "icons": [{ "src": "/images/affiliate-icon.png", "sizes": "96x96" }]
+    }
+  ],
+  "prefer_related_applications": false
+}
