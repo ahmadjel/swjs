@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' expr:dir='data:blog.languageDirection' expr:lang='data:blog.localeUnderscoreDelimited'>
+<head>
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1' name='viewport'/>
+  <title><data:view.title.escaped/></title>
+
+  <!-- SEO: Canonical URL -->
+  <link expr:href='data:view.url.canonical' rel='canonical'/>
+
+  <!-- SEO: Robots Meta Directives -->
+  <b:if cond='data:view.isSearch and !data:view.isLabelSearch'>
+    <meta content='noindex,nofollow' name='robots'/>
+  </b:if>
+
+  <!-- SEO: Favicon -->
+  <link expr:href='data:blog.blogspotFaviconUrl' rel='icon' type='image/x-icon'/>
+
+  <!-- SEO: Open Graph & Twitter Card Metadata -->
+  <meta expr:content='data:blog.title.escaped' property='og:site_name'/>
+  <meta expr:content='data:view.title.escaped' property='og:title'/>
+  <meta expr:content='data:view.title.escaped' name='twitter:title'/>
+  <meta expr:content='data:view.url.canonical' property='og:url'/>
+  <meta content='summary_large_image' name='twitter:card'/>
+
+  <b:if cond='data:view.isHomepage or data:view.isArchive or data:view.isSearch'>
+    <meta content='website' property='og:type'/>
+    <meta expr:content='data:blog.metaDescription.escaped' property='og:description'/>
+    <meta expr:content='data:blog.metaDescription.escaped' name='twitter:description'/>
+    <!-- Use a default image for homepage/archives if available -->
+    <b:with value='data:widgets.Image.first' var='headerImage'>
+      <b:if cond='data:headerImage'>
+        <meta expr:content='data:headerImage.sourceUrl' property='og:image'/>
+        <meta expr:content='data:headerImage.sourceUrl' name='twitter:image'/>
+      </b:if>
+    </b:with>
+  </b:if>
+
+  <b:if cond='data:view.isPost or data:view.isPage'>
+    <meta content='article' property='og:type'/>
+    <meta expr:content='data:view.description.escaped' property='og:description'/>
+    <meta expr:content='data:view.description.escaped' name='twitter:description'/>
+    <b:if cond='data:view.featuredImage'>
+      <meta expr:content='data:view.featuredImage resizeImage 1200' property='og:image'/>
+      <meta expr:content='data:view.featuredImage resizeImage 1200' name='twitter:image'/>
+      <meta expr:content='1200' property='og:image:width'/>
+      <meta expr:content='630' property='og:image:height'/>
+    </b:if>
+  </b:if>
+
+  <!-- SEO: JSON-LD Structured Data -->
+  <script type='application/ld+json'>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "<data:blog.title.escaped/>",
+      "url": "<data:blog.homepageUrl.canonical/>",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "<data:blog.homepageUrl.canonical/>search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+
+  <b:if cond='data:view.isPost or data:view.isPage'>
+    <script type='application/ld+json'>
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "<data:view.url.canonical/>"
+      },
+      "headline": "<data:view.title.escaped/>",
+      "datePublished": "<data:view.timestampISO8601/>",
+      "dateModified": "<data:view.lastUpdated.iso8601/>",
+      "author": {
+        "@type": "Person",
+        "name": "<data:view.author.name.escaped/>"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "<data:blog.title.escaped/>",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "<data:blog.blogspotFaviconUrl/>",
+          "width": 64,
+          "height": 64
+        }
+      },
+      "description": "<data:view.description.escaped/>"
+      <b:if cond='data:view.featuredImage'>
+      ,"image": {
+        "@type": "ImageObject",
+        "url": "<b:eval expr='data:view.featuredImage resizeImage 1200'/>",
+        "width": 1200,
+        "height": 630
+      }
+      </b:if>
+    }
+    </script>
+    <script type='application/ld+json'>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "<data:blog.homepageUrl.canonical/>"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "<data:view.title.escaped/>",
+        "item": "<data:view.url.canonical/>"
+      }]
+    }
+    </script>
+  </b:if>
+
+  <!-- CSS: Main Stylesheet -->
+  <b:skin><![CDATA[
+    /* --------------------------------------------------------------------------------
+      [ --- jelmix Blogger Template --- ]
+      Version: 1.0.0
+      Author: Jules
+      Description: A high-performance, SEO-optimized, and modern Blogger theme.
+    -------------------------------------------------------------------------------- */
+
+    /* --------------------------------------------------------------------------------
+      [ --- 1. CSS Variables --- ]
+    -------------------------------------------------------------------------------- */
+    :root {
+      --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-secondary: 'Georgia', serif;
+
+      --color-primary: #1A73E8;
+      --color-primary-dark: #1254A8;
+      --color-accent: #E8451A;
+
+      --color-text-light: #FFFFFF;
+      --color-text-base: #3C4043;
+      --color-text-secondary: #636466;
+      --color-text-dark: #202124;
+
+      --color-bg-body: #F1F3F4;
+      --color-bg-outer: #FFFFFF;
+      --color-bg-widget: #FFFFFF;
+      --color-border: #E0E0E0;
+
+      --radius: 8px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.05);
+      --transition: all 0.2s ease-in-out;
+
+      --width-container: 1120px;
+      --width-sidebar: 320px;
+    }
+
+    /* Dark Mode Variables */
+    .dark-mode {
+      --color-text-base: #E0E0E0;
+      --color-text-secondary: #BDBDBD;
+      --color-text-dark: #FFFFFF;
+
+      --color-bg-body: #121212;
+      --color-bg-outer: #1E1E1E;
+      --color-bg-widget: #2C2C2C;
+      --color-border: #424242;
+    }
+
+    /* --------------------------------------------------------------------------------
+      [ --- 2. CSS Reset & Global Styles --- ]
+    -------------------------------------------------------------------------------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      background-color: var(--color-bg-body);
+      color: var(--color-text-base);
+      margin: 0;
+      padding: 0;
+    }
+
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    a:hover {
+      color: var(--color-primary-dark);
+      text-decoration: underline;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--color-text-dark);
+      font-family: var(--font-secondary);
+      margin: 1.5em 0 0.75em;
+    }
+
+    /* --------------------------------------------------------------------------------
+      [ --- 3. Main Layout & Structure --- ]
+    -------------------------------------------------------------------------------- */
+    #outer-wrapper {
+      background-color: var(--color-bg-outer);
+      max-width: var(--width-container);
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    #content-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 24px 0;
+    }
+
+    #main-wrapper {
+      width: 100%;
+    }
+
+    #sidebar-wrapper {
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    /* Responsive Layout: Desktop */
+    @media (min-width: 992px) {
+      #main-wrapper {
+        width: calc(100% - var(--width-sidebar) - 24px);
+        margin-right: 24px;
+      }
+      #sidebar-wrapper {
+        width: var(--width-sidebar);
+        margin-top: 0;
+      }
+    }
+
+    /* --------------------------------------------------------------------------------
+      [ --- 4. Header & Navigation --- ]
+    -------------------------------------------------------------------------------- */
+    #header-wrapper {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .header .title {
+      font-size: 2em;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .header .title a {
+      color: var(--color-text-dark);
+      text-decoration: none;
+    }
+
+    .mobile-nav-toggle {
+      display: none; /* Hidden by default, shown in media query */
+    }
+
+    #header-nav {
+      display: none; /* Hidden by default */
+    }
+
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: block;
+        /* Add styles for your toggle button */
+      }
+
+      #header-nav.is-active {
+        display: block;
+        /* Add styles for your active mobile menu */
+      }
+    }
+
+    /* --------------------------------------------------------------------------------
+      [ --- 5. Blog Posts (Index) --- ]
+    -------------------------------------------------------------------------------- */
+    .blog-posts {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .blog-posts {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .post-card {
+      background-color: var(--color-bg-widget);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .post-card .entry-thumb {
+      display: block;
+      width: 100%;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .post-card .entry-header {
+      padding: 16px;
+    }
+
+    .post-card .entry-title a {
+      font-size: 1.25em;
+      color: var(--color-text-dark);
+      text-decoration: none;
+    }
+
+    .post-card .entry-meta {
+      font-size: 0.85em;
+      color: var(--color-text-secondary);
+      margin-top: 8px;
+    }
+
+    /* --------------------------------------------------------------------------------
+      [ --- 6. Single Post & Page --- ]
+    -------------------------------------------------------------------------------- */
+    .item-post-wrap .entry-title {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+    }
+
+    .post-body {
+      line-height: 1.7;
+      font-size: 1.1em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.5em;
+    }
+
+    .post-body blockquote {
+      border-left: 4px solid var(--color-primary);
+      padding-left: 16px;
+      margin: 1.5em 0;
+      font-style: italic;
+      color: var(--color-text-secondary);
+    }
+
+    .author-box {
+      display: flex;
+      align-items: center;
+      margin-top: 24px;
+      padding: 24px;
+      background-color: var(--color-bg-body);
+      border-radius: var(--radius);
+    }
+
+    .author-avatar img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-right: 24px;
+    }
+
+    .author-name {
+      margin: 0 0 8px;
+    }
+
+    .share-buttons {
+      margin-top: 24px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .share-button {
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .share-button.facebook { background-color: #1877F2; }
+    .share-button.twitter { background-color: #1DA1F2; }
+    .share-button.pinterest { background-color: #E60023; }
+    .share-button.linkedin { background-color: #0A66C2; }
+
+    /* --------------------------------------------------------------------------------
+      [ --- 7. Sidebar --- ]
+    -------------------------------------------------------------------------------- */
+    .sidebar .widget {
+      background-color: var(--color-bg-widget);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar .widget .title {
+      font-size: 1.2em;
+      font-weight: 700;
+      border-bottom: 2px solid var(--color-primary);
+      padding-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .sidebar .widget ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar .widget ul li a {
+      display: block;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-text-base);
+    }
+
+    .sidebar .widget ul li:last-child a {
+      border-bottom: none;
+    }
+
+    /* --------------------------------------------------------------------------------
+      [ --- 8. Footer --- ]
+    -------------------------------------------------------------------------------- */
+    #footer-wrapper {
+      background-color: var(--color-text-dark);
+      color: var(--color-text-light);
+      padding: 32px 0;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    #footer-wrapper .footer a {
+      color: var(--color-text-light);
+      text-decoration: underline;
+    }
+
+  ]]></b:skin>
+
+</head>
+<body>
+
+  <!--[ Main Page Structure ]-->
+  <div id='outer-wrapper'>
+
+    <!--[ Header Section ]-->
+    <header id='header-wrapper' role='banner'>
+      <button class='mobile-nav-toggle'>Menu</button>
+      <button class='dark-mode-toggle'>Dark Mode</button>
+      <div id='header-nav'>
+        <!-- Navigation Links Here -->
+      </div>
+      <b:section class='header' id='header' maxwidgets='1' name='Header' showaddelement='no'>
+        <b:widget id='Header1' locked='true' title='jelmix' type='Header' visible='true'/>
+      </b:section>
+    </header>
+
+    <!--[ Content Wrapper ]-->
+    <div id='content-wrapper'>
+      <!--[ Main Content Area ]-->
+      <main id='main-wrapper' role='main'>
+        <b:section class='main' id='main' maxwidgets='1' name='Main Posts' showaddelement='no'>
+          <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' visible='true'>
+            <!-- Main includable for Blog1 widget -->
+            <b:includable id='main'>
+              <!-- Conditional rendering: Check if it is a homepage/index or a single item page -->
+              <b:if cond='data:view.isMultipleItems'>
+                <!-- Blog Posts container for index pages -->
+                <div class='blog-posts'>
+                  <b:loop values='data:posts' var='post'>
+                    <!-- Include the postCard template for each post -->
+                    <b:include data='post' name='postCard'/>
+                  </b:loop>
+                </div>
+              <b:else/>
+                <!-- Loop for single item (post or page) -->
+                <b:loop values='data:posts' var='post'>
+                  <!-- Include the postItem template -->
+                  <b:include data='post' name='postItem'/>
+                </b:loop>
+              </b:if>
+            </b:includable>
+
+            <!--[ Homepage/Index Post Card Template ]-->
+            <b:includable id='postCard' var='post'>
+              <article class='post-card'>
+                <b:if cond='data:post.featuredImage'>
+                  <a class='entry-thumb-link' expr:href='data:post.url.canonical'>
+                    <img class='entry-thumb' expr:data-src='data:post.featuredImage' alt='Featured Image'/>
+                  </a>
+                </b:if>
+                <div class='entry-header'>
+                  <h2 class='entry-title'><a expr:href='data:post.url.canonical'><data:post.title/></a></h2>
+                  <div class='entry-meta'>
+                    <time class='published' expr:datetime='data:post.timestampISO8601'><data:post.timestamp/></time>
+                  </div>
+                </div>
+              </article>
+            </b:includable>
+
+            <!--[ Single Post/Page Item Template ]-->
+            <b:includable id='postItem' var='post'>
+              <article class='item-post-wrap'>
+                <h1 class='entry-title'><data:post.title/></h1>
+                <div class='entry-meta'>
+                  <span class='author-name'><data:post.author.name/></span> |
+                  <time class='published' expr:datetime='data:post.timestampISO8601'><data:post.timestamp/></time>
+                </div>
+                <div class='post-body'>
+                  <data:post.body/>
+                </div>
+
+                <!--[ Post Footer Components ]-->
+                <div class='post-footer'>
+                   <div class='author-box'>
+                     <div class='author-avatar'>
+                       <img expr:src='data:post.author.authorPhoto.image' alt='Author Avatar'/>
+                     </div>
+                     <div class='author-info'>
+                       <h3 class='author-name'><data:post.author.name/></h3>
+                       <p class='author-bio'><data:post.author.aboutMe/></p>
+                     </div>
+                   </div>
+                   <div class='share-buttons'>
+                     <a class='share-button facebook' expr:href='&quot;https://www.facebook.com/sharer/sharer.php?u=&quot; + data:post.url.canonical' target='_blank'>Facebook</a>
+                     <a class='share-button twitter' expr:href='&quot;https://twitter.com/intent/tweet?url=&quot; + data:post.url.canonical + &quot;&amp;text=&quot; + data:post.title' target='_blank'>Twitter</a>
+                     <a class='share-button pinterest' expr:href='&quot;https://pinterest.com/pin/create/button/?url=&quot; + data:post.url.canonical + &quot;&amp;media=&quot; + data:post.featuredImage + &quot;&amp;description=&quot; + data:post.title' target='_blank'>Pinterest</a>
+                     <a class='share-button linkedin' expr:href='&quot;https://www.linkedin.com/shareArticle?mini=true&amp;url=&quot; + data:post.url.canonical + &quot;&amp;title=&quot; + data:post.title' target='_blank'>LinkedIn</a>
+                   </div>
+                   <!-- Related Posts Placeholder -->
+                </div>
+              </article>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </main>
+
+      <!--[ Sidebar Section ]-->
+      <aside id='sidebar-wrapper' role='complementary'>
+        <b:section class='sidebar' id='sidebar' maxwidgets='1' name='Sidebar' showaddelement='yes'/>
+      </aside>
+    </div>
+
+    <!--[ Footer Section ]-->
+    <footer id='footer-wrapper' role='contentinfo'>
+       <b:section class='footer' id='footer' maxwidgets='1' name='Footer' showaddelement='yes'/>
+    </footer>
+
+  </div>
+  <!--[ End Main Page Structure ]-->
+
+  <!--[ JavaScript Section ]-->
+  <script>
+    //<![CDATA[
+      /* --------------------------------------------------------------------------------
+        [ --- jelmix Blogger Template --- ]
+        Version: 1.0.0
+        Author: Jules
+        Description: Vanilla ES6+ JavaScript for high-performance interactions.
+      -------------------------------------------------------------------------------- */
+
+      document.addEventListener('DOMContentLoaded', () => {
+
+        /* --- 1. Dark Mode --- */
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+        const html = document.documentElement;
+
+        // Apply saved theme on load
+        if (localStorage.getItem('theme') === 'dark') {
+          html.classList.add('dark-mode');
+        }
+
+        if (darkModeToggle) {
+          darkModeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark-mode');
+            if (html.classList.contains('dark-mode')) {
+              localStorage.setItem('theme', 'dark');
+            } else {
+              localStorage.setItem('theme', 'light');
+            }
+          });
+        }
+
+        /* --- 2. Mobile Navigation --- */
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        const navMenu = document.querySelector('#header-nav'); // Assuming your nav menu has this ID
+
+        if (navToggle && navMenu) {
+          navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('is-active');
+            navToggle.classList.toggle('is-active');
+          });
+        }
+
+        /* --- 2. Lazy Loading for Images & Backgrounds --- */
+        const lazyElements = document.querySelectorAll('[data-src], [data-bg]');
+
+        const lazyLoad = (target) => {
+          const io = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const el = entry.target;
+                const src = el.getAttribute('data-src');
+                const bg = el.getAttribute('data-bg');
+
+                if (src) {
+                  el.setAttribute('src', src);
+                  el.removeAttribute('data-src');
+                }
+                if (bg) {
+                  el.style.backgroundImage = `url(${bg})`;
+                  el.removeAttribute('data-bg');
+                }
+
+                observer.disconnect();
+              }
+            });
+          });
+          io.observe(target);
+        };
+        lazyElements.forEach(lazyLoad);
+
+        /* --- 3. Process Post Body for Lazy Loading --- */
+        const postBody = document.querySelector('.post-body');
+        if (postBody) {
+          const images = postBody.querySelectorAll('img');
+          images.forEach(img => {
+            const src = img.getAttribute('src');
+            img.setAttribute('data-src', src);
+            img.removeAttribute('src');
+            lazyLoad(img);
+          });
+        }
+
+      });
+    //]]>
+  </script>
+
+</body>
+</html>
