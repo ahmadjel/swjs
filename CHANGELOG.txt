@@ -1,0 +1,57 @@
+# jelmix Blogger Template - Changelog
+
+## Version 1.1.0 (2025-11-13)
+
+**Feature Enhancements & Bug Fixes**
+
+This version addresses feedback from the initial code review, fixing non-functional scripts and implementing several key features that were missing from the initial release.
+
+### ✨ Features & Enhancements
+
+*   **Dark Mode:** Implemented a fully functional dark mode, complete with a toggle button and persistence via `localStorage`.
+*   **Author Box:** Added a dynamic author box to single post pages, which automatically displays the author's profile picture, name, and bio from their Blogger profile.
+*   **Social Share Buttons:** Added social share buttons to single post pages for Facebook, Twitter, Pinterest, and LinkedIn.
+
+### 🛠️ Fixes
+
+*   **Mobile Navigation:** The mobile navigation menu is now functional. The JavaScript correctly targets the new HTML elements, and the menu is now fully responsive.
+*   **Lazy Loading:** The lazy loading script has been fixed and is now functional. It correctly handles `<img>` tags in both the post cards and the main post body.
+
+### 🗑️ Removed
+
+*   N/A
+
+## Version 1.0.0 (2025-11-13)
+
+**Initial Release**
+
+This is the first official release of the jelmix Blogger template. This version was built from scratch with a focus on performance, SEO, and modern design principles.
+
+### ✨ Features & Enhancements
+
+*   **Initial Build:** Completely new theme engineered from the ground up, merging the best concepts from `Median-UI`, `plus-ui`, and `spotLite` templates.
+*   **Modern Architecture:** Built with a valid Blogger XML structure, a clean HTML5 layout, and a mobile-first responsive design using CSS Flexbox and Grid.
+*   **Performance Optimized:**
+    *   No jQuery dependency. All interactive features are powered by lightweight, vanilla ES6+ JavaScript.
+    *   Images are lazy-loaded using the efficient `IntersectionObserver` API to reduce initial page load times.
+*   **Advanced SEO:**
+    *   Comprehensive JSON-LD structured data schemas for `WebSite`, `Article`, and `BreadcrumbList`.
+    *   Dynamic Open Graph and Twitter Card meta tags for rich social sharing.
+    *   Proper canonical URL and robots meta directives for optimal search engine indexing.
+*   **CSS & Styling:**
+    *   Modern, responsive, and mobile-first CSS architecture.
+    *   Extensive use of CSS variables for easy customization of colors, fonts, and spacing.
+*   **Core Blogger Logic:**
+    *   Clean, from-scratch implementation of the main post loop for the homepage and archive pages.
+    *   Optimized single post view with placeholders for an author box, share buttons, and related posts.
+*   **Documentation:**
+    *   Initial `README.md` created with detailed installation and customization instructions.
+
+### 🛠️ Fixes
+
+*   Not applicable for the initial release, as all code is new.
+
+### 🗑️ Removed
+
+*   **jQuery Dependency:** Unlike the analyzed templates, jelmix is completely free of jQuery, resulting in a significantly smaller and faster codebase.
+*   **Outdated Practices:** Removed all legacy inline scripting and complex, hard-to-maintain XML logic found in the analyzed templates.
